@@ -1,0 +1,13 @@
+p - position of the body
+v - velocity of the body
+s - size of the body
+w - size of the screen
+dt - delta time
+
+p' <- p + v*dt                  (* xmm0 *)
+C1 <- p' < 0                   (* xmm1 *)
+C2 <- p' + s >= w                (* xmm2 *)
+C <- C1 || C2                   (* xmm1 *)
+^C                              (* xmm2 *)
+p <- [C]*p + [^C]*p'
+v <- v*([^C] - [C])
